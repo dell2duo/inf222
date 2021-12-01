@@ -1,3 +1,5 @@
+#                    !! IMPORTANTE !!
+# Este código é de autoria de Rafael Henrique de Carvalho Rocha
 import math
 
 maleOscarAges = [44, 41, 62, 52, 41, 34,
@@ -22,6 +24,8 @@ def createEmptyList(size):
 
 def getMiddleElementPos(list):
   return int((len(list) / 2)) - 1
+
+# Exercício 1
 
 def media(list):
   media = 0
@@ -90,4 +94,85 @@ print("Ponto Médio: " + str(pontoMedio(maleOscarAges)))
 print("Amplitude: " + str(amplitude(maleOscarAges)))
 print("Desvio Padrão: " + str(desvioPadrao(maleOscarAges)))
 print("Variância: " + str(variancia(maleOscarAges)))
-print("Coeficiente de Variação: " +str(coeficienteVariacao(maleOscarAges)) + "%")
+print("Coeficiente de Variação: " + str(coeficienteVariacao(maleOscarAges)) + "%")
+
+# Exercício 2
+
+def format(val):
+  if val < 10:
+    return str(val) + " "
+  else:
+    return str(val)
+
+def printFreq(f, fr, fac, frac):
+  for idx in range(6):
+    if idx <= 0:
+      print("\nIdade|F   |Fr   |Fac |Frac ")
+      print("<=30 | " + format(f[idx]) + " | " + format(fr[idx]) + "% | " + format(fac[idx]) + " | " + format(frac[idx]) + "%") 
+    elif idx <= 1:
+      print("<=40 | " + format(f[idx]) + " | " + format(fr[idx]) + "% | " + format(fac[idx]) + " | " + format(frac[idx]) + "%") 
+    elif idx <= 2:
+      print("<=50 | " + format(f[idx]) + " | " + format(fr[idx]) + "% | " + format(fac[idx]) + " | " + format(frac[idx]) + "%") 
+    elif idx <= 3:
+      print("<=60 | " + format(f[idx]) + " | " + format(fr[idx]) + "% | " + format(fac[idx]) + " | " + format(frac[idx]) + "%") 
+    elif idx <= 4:
+      print("<=70 | " + format(f[idx]) + " | " + format(fr[idx]) + "% | " + format(fac[idx]) + " | " + format(frac[idx]) + "%") 
+    else:
+      print(">=71 | " + format(f[idx]) + " | " + format(fr[idx]) + "% | " + format(fac[idx]) + " | " + format(frac[idx]) + "%\n" ) 
+
+def porcentage(amount, population):
+  return round((amount * 100) / population)
+
+def frequenciaAbsoluta(list):
+  list.sort()
+  ocurrencyList = createEmptyList(6)
+  for element in list:
+    if element <= 30:
+      ocurrencyList[0] += 1
+    elif element <= 40:
+      ocurrencyList[1] += 1
+    elif element <= 50:
+      ocurrencyList[2] += 1
+    elif element <= 60:
+      ocurrencyList[3] += 1
+    elif element <= 70:
+      ocurrencyList[4] += 1
+    else:
+      ocurrencyList[5] += 1
+  
+  return ocurrencyList
+
+def frequenciaRelativa(list):
+  list.sort()
+  ocurrencyList = frequenciaAbsoluta(list)
+  ocurrencyPercentage = createEmptyList(6)
+  for idx in range(6):
+    ocurrencyPercentage[idx] = porcentage(ocurrencyList[idx], sum(ocurrencyList))
+  
+  return ocurrencyPercentage
+
+def frequenciaAcumulada(list):
+  ocurrencyList = frequenciaAbsoluta(list)
+  ocurrencyList.reverse()
+  ocurrencySum = createEmptyList(6)
+  for i in range(6):
+    for j in range(i, 6):
+      ocurrencySum[i] += ocurrencyList[j]
+  
+  ocurrencySum.reverse()
+  return ocurrencySum
+
+def frequenciaRelativaAcumulada(list):
+  ocurrencyList = frequenciaRelativa(list)
+  ocurrencyList.reverse()
+  ocurrencySum = createEmptyList(6)
+  for i in range(6):
+    for j in range(i, 6):
+      ocurrencySum[i] += ocurrencyList[j]
+  
+  ocurrencySum.reverse()
+  return ocurrencySum
+
+
+printFreq(frequenciaAbsoluta(maleOscarAges), frequenciaRelativa(maleOscarAges),
+  frequenciaAcumulada(maleOscarAges), frequenciaRelativaAcumulada(maleOscarAges))
